@@ -7,39 +7,38 @@ Behaviour of the users can be traced in terms of business with exploration of th
 
 -- Project_1-
 
-/*Question-1 
-Ans
+
 Create new schema as ecommerce*/
 
 CREATE DATABASE ecommerce;
 SHOW databases;
 
--- Question-2  Import .csv file users_data into MySQL
+-- Import .csv file users_data into MySQL
 --             (right click on ecommerce schema -> Table Data import Wizard -> Give path of the file ->
 --              Next -> choose options : Create a new table , select delete if exist -> next -> next)
 
 -- Ans- Succesfully data uploaded.
 
--- Question-3 Run SQL command to see the structure of table.
+--  Run SQL command to see the structure of table.
 -- Ans-
 Use ecommerce;
 DESC project_1; # Describing the structure of Table Question 3
 
-/* Question 4
+/* 
 Selecting the fist 100 rows of the database*/
 Select * From project_1 LIMIT 100;
 
- /*Question 5
+ /*
  Selecting the count of country and language in the database*/
 select count(distinct country) as Distinct_Country,count(distinct language ) as Distinct_language 
 from project_1;
 
-/*Question 6
+/*
 Checking whether male  user are having more follower or female user*/
 select gender,sum(socialNbFollowers) Gender_wise_Followers 
 from project_1 group by gender;
 
-#Question 7
+#
 #Total count of user using Profile Pid
 Select count(type) as User_having_profile_pic  
 from project_1 where hasProfilePicture="True";
@@ -54,14 +53,14 @@ Select count(type) as user_using_Android_App from project_1 where hasAndroidApp=
 select count(type) as user_using_Ios_App from project_1 where hasIosApp="True";
 
 
- -- Question-8 Calculate the total number of buyers for each country and sort the result in descending order of total number of buyers. 
+ --  Calculate the total number of buyers for each country and sort the result in descending order of total number of buyers. 
 --            (Hint: consider only those users having at least 1 product bought.)
 -- Ans-
 Select country,count(productsBought) as Number_of_Buyers from project_1  where productsBought>=1 
 group by country 
 order by count(country) desc;
 
--- Question-9 Calculate the total number of sellers for each country and sort the result in ascending order of total number of sellers. 
+-- Calculate the total number of sellers for each country and sort the result in ascending order of total number of sellers. 
 --            (Hint: consider only those users having at least 1 product sold.)
 -- Ans-
 Select country,count(productsSold) as Number_of_sellers from project_1  
@@ -69,20 +68,20 @@ where productsSold>=1
 group by country 
 order by Number_of_sellers asc;
 
--- Question-10 Display name of top 10 countries having maximum products pass rate.
+--  Display name of top 10 countries having maximum products pass rate.
 -- Ans-
 select country,max(productsPassRate) ProductsPassRate from project_1 
 group by country 
 order by ProductsPassRate DESC
 limit 10;
 
--- Question-11 Calculate the number of users on an ecommerce platform for different language choices.
+-- Calculate the number of users on an ecommerce platform for different language choices.
 -- Ans-
 select language,count(type) as Count_of_Lang_user 
 from project_1 
 group by language;
 
--- Question-12  Check the choice of female users about putting the product in a wishlist or to like socially on an ecommerce platform.
+--  Check the choice of female users about putting the product in a wishlist or to like socially on an ecommerce platform.
 --              (Hint: use UNION to answer this question.)
 -- Ans- 
 select 'Female choice' as " ",'count' as " " union 
@@ -91,7 +90,7 @@ where socialProductsLiked>=1 And gender="F"  union
 select "Products_wishlisted",count(productsWished) from project_1
 where productsWished>=1 and gender="F";
 
-/*Question-13 Check the choice of male users about being seller or buyer. 
+/* Check the choice of male users about being seller or buyer. 
 (Hint: use UNION to solve this question.)
  Ans*/
 select "Male_Choices" " ","Count" " " union
@@ -106,34 +105,34 @@ select country,count(productsBought) as Total_Buyers from project_1
 group by country
 order by Total_Buyers DESC; 
 
--- Question-15 List the name of 10 countries having zero number of sellers.
+--  List the name of 10 countries having zero number of sellers.
 -- Ans-
 select country,productssold as Total_Sold from project_1 
 where productssold=0 
 group by country limit 10;
 
--- Questiosn-16 Display record of top 110 users who have used ecommerce platform recently.
+--  Display record of top 110 users who have used ecommerce platform recently.
 -- Ans-
 select identifierHash,country,gender,daysSinceLastLogin
 from project_1
 order by daysSinceLastLogin asc limit 110;
 
--- Question-17 Calculate the number of female users those who have not logged in since last 100 days.
+-- Calculate the number of female users those who have not logged in since last 100 days.
 -- Ans-
 select gender,count(type) as not_LoggedIn from project_1
 where daysSinceLastLogin>=100 and gender="F";
 
--- Question-18 Display the number of female users of each country at ecommerce platform.
+--Display the number of female users of each country at ecommerce platform.
 -- Ans-
 select country,gender,count(type) as Female_User from project_1
 where gender="F" group by country;
 
--- Question-19 Display the number of male users of each country at ecommerce platform.
+--  Display the number of male users of each country at ecommerce platform.
 -- Ans-
 select country,gender,count(type) as Male_User from project_1
 where gender="M" group by country;
 
-/*Question-20 Calculate the average number of products sold and bought on ecommerce platform 
+/*Calculate the average number of products sold and bought on ecommerce platform 
  by male users for each country-
  Ans*/
  select country,gender,avg(productsSold) as Avg_Product_sold,avg(productsBought) as Avg_product_Bought 
